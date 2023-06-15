@@ -3,6 +3,8 @@
   "request-time-window": 600000,
   "request-live-time": 1200000,
   "redis": "127.0.0.1:6379",
+  "nats": ["127.0.0.1:4222"],
+  "pricing-subject": "pricing-notify",
   "jaeger-url": "jaeger:1215",
   "database": {
     "host": "127.0.0.1",

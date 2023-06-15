@@ -8,7 +8,7 @@ import (
 )
 
 func InitApp() {
-	redis.InitClient("127.0.0.1:6379")
+	redisWrapper.InitClient("127.0.0.1:6379")
 
 	r := gin.Default()
 	AddRideRouter(r)

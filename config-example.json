@@ -1,14 +1,15 @@
 {
+  "service-name": "surge",
   "redis": "127.0.0.1:6379",
   "jaeger-url": "jaeger:1215",
   "database": {
     "host": "127.0.0.1",
     "user": "admin",
     "password": "password",
-    "DBName": "surge",
+    "db-name": "surge",
     "port": "5432"
   },
-  "externalExpose": {
+  "external-expose": {
     "rest": "127.0.0.1:8080"
   }
 }

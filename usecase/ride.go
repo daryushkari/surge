@@ -32,14 +32,32 @@ func SaveRide(ctx *gin.Context, req requestModel.SaveRideRequest) (requestModel.
 		}, err
 	}
 
+	min := fmt.Sprintf("%d", time.Now().UnixMilli()-config.GetCnf().RequestTimeWindow)
+	max := fmt.Sprintf("%d", time.Now().UnixMilli())
+	res, err := redisWrapper.GetCount(ctx, key, min, max)
+	if err != nil {
+		return requestModel.SaveRideResponse{
+			Message: errorMsg.InternalServerError,
+			Code:    http.StatusInternalServerError,
+		}, err
+	}
+
+	_, err = GetRequestCoefficient(ctx, res)
+	if err != nil {
+		return requestModel.SaveRideResponse{
+			Message: errorMsg.InternalServerError,
+			Code:    http.StatusInternalServerError,
+		}, err
+	}
+
 	return requestModel.SaveRideResponse{
 		Message: errorMsg.SuccessfullySaved,
 		Code:    http.StatusOK,
 	}, nil
 }
 
-// getRequestCoefficient returns 1 when requests are lower than predefined thresholds
-func getRequestCoefficient(ctx context.Context, requestCount int64) (coe float64, err error) {
+// GetRequestCoefficient returns 1 when requests are lower than predefined thresholds
+func GetRequestCoefficient(ctx context.Context, requestCount int64) (coe float64, err error) {
 	thresholdList, err := repository.GetAll(ctx)
 	if err != nil {
 		return 0, err

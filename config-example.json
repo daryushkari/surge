@@ -1,5 +1,7 @@
 {
   "service-name": "surge",
+  "request-time-window": 600000,
+  "request-live-time": 1200000,
   "redis": "127.0.0.1:6379",
   "jaeger-url": "jaeger:1215",
   "database": {

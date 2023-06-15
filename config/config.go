@@ -10,10 +10,12 @@ var (
 )
 
 type Config struct {
-	ServiceName string `json:"service-name"`
-	Redis       string `json:"redis"`
-	JaegerURL   string `json:"jaeger-url"`
-	Database    struct {
+	ServiceName       string `json:"service-name"`
+	Redis             string `json:"redis"`
+	JaegerURL         string `json:"jaeger-url"`
+	RequestTimeWindow int64  `json:"request-time-window"`
+	RequestLiveTime   int64  `json:"request-live-time"`
+	Database          struct {
 		Host     string `json:"host"`
 		User     string `json:"user"`
 		Password string `json:"password"`

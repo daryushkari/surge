@@ -4,9 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"surge/delivery"
+	"surge/pkg/redis"
 )
 
 func InitApp() {
+	redis.InitClient("127.0.0.1:6379")
+
 	r := gin.Default()
 	AddRideRouter(r)
 	err := r.Run("localhost:8080")

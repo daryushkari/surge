@@ -10,7 +10,7 @@ services:
       - backend
 
   postgres:
-    image: postgres:13.3
+    image: postgis/postgis
     restart: unless-stopped
     volumes:
       - database:/var/lib/postgresql/data

@@ -5,6 +5,7 @@ import (
 	"log"
 	"surge/config"
 	"surge/delivery"
+	postgresql "surge/pkg/postgis"
 	"surge/pkg/redis"
 )
 
@@ -14,12 +15,23 @@ func InitApp() {
 	if err != nil {
 		log.Fatalln("error occurred in reading config:", err)
 	}
-	log.Println(cnf.Redis)
 	redisWrapper.InitClient(cnf.Redis)
+
+	err = postgresql.Init(cnf)
+	if err != nil {
+		log.Fatalln("error occurred connecting database:", err)
+	}
+	pdb := postgresql.Get()
+
+	err = migrate(pdb)
+	if err != nil {
+		log.Fatalln("error occurred in migration", err)
+	}
+	Seed(pdb)
 
 	r := gin.Default()
 	AddRideRouter(r)
-	err = r.Run("localhost:8080")
+	err = r.Run(cnf.ExternalExpose.Rest)
 	if err != nil {
 		log.Fatalln("error occurred:", err)
 	}

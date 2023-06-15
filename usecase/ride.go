@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 	"surge/entity/requestModel"
 	"surge/pkg/errorMsg"
 	redisWrapper "surge/pkg/redis"
+	"surge/repository"
 	"time"
 )
 
@@ -34,4 +36,19 @@ func SaveRide(ctx *gin.Context, req requestModel.SaveRideRequest) (requestModel.
 		Message: errorMsg.SuccessfullySaved,
 		Code:    http.StatusOK,
 	}, nil
+}
+
+// getRequestCoefficient returns 1 when requests are lower than predefined thresholds
+func getRequestCoefficient(ctx context.Context, requestCount int64) (coe float64, err error) {
+	thresholdList, err := repository.GetAll(ctx)
+	if err != nil {
+		return 0, err
+	}
+	coe = 1
+	for _, v := range thresholdList {
+		if requestCount > v.RequestThreshold {
+			coe = v.PriceCoefficient
+		}
+	}
+	return coe, nil
 }

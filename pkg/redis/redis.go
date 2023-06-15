@@ -2,7 +2,9 @@ package redisWrapper
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/redis/go-redis/v9"
+	"time"
 )
 
 var rdb *redis.Client
@@ -33,4 +35,21 @@ func RemoveOldElements(ctx context.Context, key string, max string) error {
 	result := rdb.ZRemRangeByScore(ctx, key, "0", max)
 	_, err := result.Result()
 	return err
+}
+
+func Get(ctx context.Context, key string, dest interface{}) error {
+	p, err := rdb.Get(ctx, key).Result()
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal([]byte(p), &dest)
+}
+
+func Set(ctx context.Context, key string, value interface{}, duration time.Duration) error {
+	p, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+	return rdb.Set(ctx, key, p, duration).Err()
 }

@@ -38,6 +38,13 @@ services:
     networks:
       - backend
 
+  nats:
+    image: nats
+    ports:
+      - 4222:4222
+    networks:
+      - backend
+
   redis-commander:
     hostname: redis-commander
     image: rediscommander/redis-commander:latest

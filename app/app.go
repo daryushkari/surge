@@ -4,10 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"surge/config"
+	"surge/cronjob"
 	"surge/delivery"
 	natsBroker "surge/pkg/nats"
 	postgresql "surge/pkg/postgis"
 	"surge/pkg/redis"
+	"time"
 )
 
 func InitApp() {
@@ -35,12 +37,33 @@ func InitApp() {
 	}
 	Seed(pdb)
 
+	exit := HandleCronJobs(cnf)
+
 	r := gin.Default()
 	AddRideRouter(r)
 	err = r.Run(cnf.ExternalExpose.Rest)
 	if err != nil {
 		log.Fatalln("error occurred:", err)
 	}
+	exit <- true
+}
+
+func HandleCronJobs(cnf *config.Config) chan bool {
+	exit := make(chan bool)
+	ticker := time.NewTicker(time.Millisecond * time.Duration(cnf.RequestLiveTime))
+	go func() {
+		for {
+			select {
+			case <-exit:
+				ticker.Stop()
+				log.Println("exiting program")
+				return
+			case <-ticker.C:
+				cronjob.RemoveOldRequest()
+			}
+		}
+	}()
+	return exit
 }
 
 func AddRideRouter(r *gin.Engine) {

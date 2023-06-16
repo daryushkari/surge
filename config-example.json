@@ -1,7 +1,7 @@
 {
   "service-name": "surge",
   "request-time-window": 600000,
-  "request-live-time": 1200000,
+  "request-live-time": 650000,
   "redis": "127.0.0.1:6379",
   "nats": ["127.0.0.1:4222"],
   "notify-pricing-retry-count": 3,

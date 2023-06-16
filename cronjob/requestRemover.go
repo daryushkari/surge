@@ -21,6 +21,9 @@ func RemoveOldRequest() {
 	for _, v := range tehranList.Districts {
 		dKey := fmt.Sprintf("%s:%s", config.GetCnf().ServiceName, v)
 		max := fmt.Sprintf("%d", time.Now().UnixMilli()-config.GetCnf().RequestLiveTime)
-		redisWrapper.RemoveOldElements(context.Background(), dKey, max)
+		err := redisWrapper.RemoveOldElements(context.Background(), dKey, max)
+		if err != nil {
+			log.Println("error removing old requests", err)
+		}
 	}
 }

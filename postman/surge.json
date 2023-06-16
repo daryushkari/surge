@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "b2075187-a744-49e6-8074-1353b51a47fb",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "127.0.0.1:8080/ride/save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 35.8136092,\n    \"longitude\": 51.5151675\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/ride/save",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"ride",
+						"save"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

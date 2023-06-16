@@ -9,7 +9,7 @@ type Point struct {
 
 type DistrictPolygon struct {
 	Points     []*Point
-	districtId string
+	DistrictId string
 }
 
 type TehranDistrictList struct {

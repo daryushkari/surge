@@ -40,7 +40,7 @@ func ReturnPolygons() (*TehranDistrictList, error) {
 
 func getDistrictPolygon(districtId string) (districtPol *DistrictPolygon, err error) {
 	var data *DistrictBoundariesResponse
-	districtPol = &DistrictPolygon{districtId: districtId}
+	districtPol = &DistrictPolygon{DistrictId: districtId}
 
 	GetDistrictBoundaryQuery := fmt.Sprintf(`[out:json];
 				relation(%s);

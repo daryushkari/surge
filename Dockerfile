@@ -11,7 +11,7 @@ RUN go mod download
 EXPOSE 8080
 
 COPY config.json ./
-COPY config-test.json ./
+COPY test-config.json ./
 COPY . ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o /surge
 CMD ["/surge"]

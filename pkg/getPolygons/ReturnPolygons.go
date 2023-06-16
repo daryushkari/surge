@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -21,13 +20,21 @@ const (
 	OuterRole   = "outer"
 )
 
-func ReturnPolygons() error {
+// ReturnPolygons gets list of all tehranDistricts and then gets polygon of each district
+func ReturnPolygons() (*TehranDistrictList, error) {
 	tehranDistricts, err := getDistrictList()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	log.Println((tehranDistricts.districts))
-	return nil
+
+	for _, v := range tehranDistricts.districts {
+		poly, polyErr := getDistrictPolygon(v)
+		if polyErr != nil {
+			return nil, polyErr
+		}
+		tehranDistricts.Polygons = append(tehranDistricts.Polygons, poly)
+	}
+	return tehranDistricts, nil
 }
 
 func getDistrictPolygon(districtId string) (districtPol *DistrictPolygon, err error) {

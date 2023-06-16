@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"surge/entity/requestModel"
 	"surge/pkg/errorMsg"
+	"surge/usecase"
 )
 
 func SaveRide(ctx *gin.Context) {
@@ -14,10 +15,14 @@ func SaveRide(ctx *gin.Context) {
 		return
 	}
 
+	resp, err := usecase.SaveRide(ctx, input)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": errorMsg.InternalServerError,
+		})
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": requestModel.SaveRideResponse{
-			Message: errorMsg.BadRequest,
-			Code:    http.StatusOK,
-		},
+		"data": resp,
 	})
 }

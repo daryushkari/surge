@@ -42,13 +42,15 @@ func SaveRide(ctx *gin.Context, req requestModel.SaveRideRequest) (requestModel.
 		}, err
 	}
 
-	_, err = GetRequestCoefficient(ctx, res)
+	coe, err := GetRequestCoefficient(ctx, res)
 	if err != nil {
 		return requestModel.SaveRideResponse{
 			Message: errorMsg.InternalServerError,
 			Code:    http.StatusInternalServerError,
 		}, err
 	}
+
+	go NotifyPricing(ctx, coe, disId)
 
 	return requestModel.SaveRideResponse{
 		Message: errorMsg.SuccessfullySaved,

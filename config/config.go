@@ -10,14 +10,17 @@ var (
 )
 
 type Config struct {
-	ServiceName       string   `json:"service-name"`
-	Redis             string   `json:"redis"`
-	JaegerURL         string   `json:"jaeger-url"`
-	RequestTimeWindow int64    `json:"request-time-window"`
-	RequestLiveTime   int64    `json:"request-live-time"`
-	Nats              []string `json:"nats"`
-	PricingSubject    string   `json:"pricing-subject"`
-	Database          struct {
+	ServiceName string `json:"service-name"`
+	Redis       string `json:"redis"`
+	JaegerURL   string `json:"jaeger-url"`
+	// request-time-window is 10 minutes in milliseconds
+	RequestTimeWindow       int64    `json:"request-time-window"`
+	RequestLiveTime         int64    `json:"request-live-time"`
+	NotifyPricingRetryCount int      `json:"notify-pricing-retry-count"`
+	NotifyPricingTimeout    int      `json:"notify-pricing-timeout"`
+	Nats                    []string `json:"nats"`
+	PricingSubject          string   `json:"pricing-subject"`
+	Database                struct {
 		Host     string `json:"host"`
 		User     string `json:"user"`
 		Password string `json:"password"`

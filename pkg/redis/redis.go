@@ -9,6 +9,10 @@ import (
 
 var rdb *redis.Client
 
+const (
+	NoTTLTime = -1
+)
+
 func InitClient(addr string) {
 	if rdb == nil {
 		rdb = redis.NewClient(&redis.Options{

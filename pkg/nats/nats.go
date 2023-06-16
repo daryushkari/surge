@@ -15,7 +15,7 @@ func Connect(conf *config.Config) (err error) {
 	var conn *nats.Conn
 	opts := nats.Options{
 		Secure:         false,
-		Servers:        config.GetCnf().Nats,
+		Servers:        conf.Nats,
 		PingInterval:   time.Second * 60,
 		AllowReconnect: true,
 		MaxReconnect:   10,

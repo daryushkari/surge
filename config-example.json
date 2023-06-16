@@ -4,6 +4,8 @@
   "request-live-time": 1200000,
   "redis": "127.0.0.1:6379",
   "nats": ["127.0.0.1:4222"],
+  "notify-pricing-retry-count": 3,
+  "notify-pricing-timeout": 5,
   "pricing-subject": "pricing-notify",
   "jaeger-url": "jaeger:1215",
   "database": {

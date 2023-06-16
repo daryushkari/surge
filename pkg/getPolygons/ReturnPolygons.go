@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"strings"
-	"surge/pkg/errorMsg"
 )
 
 const (
@@ -20,8 +19,13 @@ out geom;
 	SubAreaRole = "subarea"
 )
 
-func ReturnPolygons() {
+func ReturnPolygons() error {
+	_, err := getDistrictList()
+	if err != nil {
+		return err
+	}
 
+	return nil
 }
 
 func getDistrictList() (tehranDistricts *TehranDistrictList, err error) {
@@ -51,7 +55,7 @@ func getDistrictList() (tehranDistricts *TehranDistrictList, err error) {
 		}
 	}
 	if len(tehranDistricts.districts) == 0 {
-		return nil, errors.New(errorMsg.InternalServerError)
+		return nil, errors.New("error getting districts")
 	}
 	return tehranDistricts, nil
 }

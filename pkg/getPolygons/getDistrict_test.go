@@ -7,7 +7,7 @@ import (
 )
 
 func TestReturnPolygons(t *testing.T) {
-	err := config.InitCnf("../../config.json")
+	err := config.InitCnf("../../test-config.json")
 	tehranList, err := ReturnPolygons()
 	if err != nil {
 		t.Errorf("Expected nil but got %v", err)

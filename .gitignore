@@ -154,3 +154,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/go,goland,linux
 config.json
+test-config.json

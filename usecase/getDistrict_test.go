@@ -11,9 +11,9 @@ type isPointTests struct {
 }
 
 var tableTests = []isPointTests{
-	isPointTests{5, 5, true},
-	isPointTests{-5, -5, false},
-	isPointTests{0, 0, false},
+	{5, 5, true},
+	{-5, -5, false},
+	{0, 0, false},
 }
 
 func TestIsPointInPolygon(t *testing.T) {

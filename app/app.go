@@ -40,6 +40,7 @@ func InitApp() {
 	exit := HandleCronJobs(cnf)
 
 	r := gin.Default()
+	r.Use(gin.Recovery())
 	AddRideRouter(r)
 	err = r.Run(cnf.ExternalExpose.Rest)
 	if err != nil {

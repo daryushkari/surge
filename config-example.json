@@ -8,6 +8,7 @@
   "notify-pricing-timeout": 5,
   "pricing-subject": "pricing-notify",
   "jaeger-url": "jaeger:1215",
+  "overpass-url":"https://overpass-api.de/api/interpreter",
   "database": {
     "host": "127.0.0.1",
     "user": "admin",

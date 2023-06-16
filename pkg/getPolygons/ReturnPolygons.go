@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"surge/config"
 )
 
 const (
@@ -27,7 +28,7 @@ func ReturnPolygons() (*TehranDistrictList, error) {
 		return nil, err
 	}
 
-	for _, v := range tehranDistricts.districts {
+	for _, v := range tehranDistricts.Districts {
 		poly, polyErr := getDistrictPolygon(v)
 		if polyErr != nil {
 			return nil, polyErr
@@ -68,7 +69,7 @@ func returnDistrictPoints(data *DistrictBoundariesResponse) ([]*Point, error) {
 			for _, v := range data.Elements[0].Members {
 				if v.Role == OuterRole {
 					if v.Geometry == nil {
-						return nil, errors.New("internal server error")
+						continue
 					}
 					for _, pnt := range v.Geometry {
 						pointList = append(pointList,
@@ -101,19 +102,19 @@ func getDistrictList() (tehranDistricts *TehranDistrictList, err error) {
 		if len(data.Elements) > 0 {
 			for _, v := range data.Elements[0].Members {
 				if v.Role == SubAreaRole {
-					tehranDistricts.districts = append(tehranDistricts.districts, fmt.Sprintf("%d", v.Ref))
+					tehranDistricts.Districts = append(tehranDistricts.Districts, fmt.Sprintf("%d", v.Ref))
 				}
 			}
 		}
 	}
-	if len(tehranDistricts.districts) == 0 {
-		return nil, errors.New("error getting districts")
+	if len(tehranDistricts.Districts) == 0 {
+		return nil, errors.New("error getting Districts")
 	}
 	return tehranDistricts, nil
 }
 
 func sendOverPassQuery(query string) (body []byte, err error) {
-	resp, err := http.Post("https://overpass-api.de/api/interpreter", "application/x-www-form-urlencoded", strings.NewReader(query))
+	resp, err := http.Post(config.GetCnf().OverpassUrl, "application/x-www-form-urlencoded", strings.NewReader(query))
 	if err != nil {
 		return nil, err
 	}

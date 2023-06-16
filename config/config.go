@@ -17,6 +17,7 @@ type Config struct {
 	RequestTimeWindow       int64    `json:"request-time-window"`
 	RequestLiveTime         int64    `json:"request-live-time"`
 	NotifyPricingRetryCount int      `json:"notify-pricing-retry-count"`
+	OverpassUrl             string   `json:"overpass-url"`
 	NotifyPricingTimeout    int      `json:"notify-pricing-timeout"`
 	Nats                    []string `json:"nats"`
 	PricingSubject          string   `json:"pricing-subject"`

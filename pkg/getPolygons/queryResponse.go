@@ -13,7 +13,7 @@ type DistrictPolygon struct {
 }
 
 type TehranDistrictList struct {
-	districts []string
+	Districts []string
 	Polygons  []*DistrictPolygon
 }
 

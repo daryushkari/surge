@@ -11,7 +11,7 @@ var (
 	nc *nats.EncodedConn
 )
 
-func Connect(conf config.Config) (err error) {
+func Connect(conf *config.Config) (err error) {
 	var conn *nats.Conn
 	opts := nats.Options{
 		Secure:         false,

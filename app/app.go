@@ -5,6 +5,7 @@ import (
 	"log"
 	"surge/config"
 	"surge/delivery"
+	natsBroker "surge/pkg/nats"
 	postgresql "surge/pkg/postgis"
 	"surge/pkg/redis"
 )
@@ -16,6 +17,11 @@ func InitApp() {
 		log.Fatalln("error occurred in reading config:", err)
 	}
 	redisWrapper.InitClient(cnf.Redis)
+
+	err = natsBroker.Connect(cnf)
+	if err != nil {
+		log.Fatalln("error occurred in connecting to nats:", err)
+	}
 
 	err = postgresql.Init(cnf)
 	if err != nil {

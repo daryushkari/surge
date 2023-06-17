@@ -2,21 +2,21 @@
   "service-name": "surge",
   "request-time-window": 600000,
   "request-live-time": 650000,
-  "redis": "127.0.0.1:6379",
-  "nats": ["127.0.0.1:4222"],
+  "redis": "redis:6379",
+  "nats": ["nats://nats:4222"],
   "notify-pricing-retry-count": 3,
   "notify-pricing-timeout": 5,
   "pricing-subject": "pricing-notify",
   "jaeger-url": "jaeger:1215",
   "overpass-url":"https://overpass-api.de/api/interpreter",
   "database": {
-    "host": "127.0.0.1",
+    "host": "postgres",
     "user": "admin",
     "password": "password",
     "db-name": "surge",
     "port": "5432"
   },
   "external-expose": {
-    "rest": "127.0.0.1:8080"
+    "rest": ":8080"
   }
 }

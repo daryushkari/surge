@@ -67,3 +67,9 @@ so each request is saved in its origin district sorted set. we set score and val
 milliseconds and when we want to count number of requests since 10 minutes ago for each district we use 
 ZCOUNT and give it unix time of 10 minutes ago until now and it gives us number of requests in each time window.
 also for making sorted sets small we have a periodic task that removes older requests in each district sorted set.
+
+also bellow images show structure of the surge service:
+
+![request-response-model](https://github.com/daryushkari/surge/assets/23256921/f77382af-ac64-497b-9808-a03d6db31bab)
+
+![service arch](https://github.com/daryushkari/surge/assets/23256921/0a0ea646-9e49-45f3-9a23-477e3e0fcebd)

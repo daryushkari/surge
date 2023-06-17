@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+// RemoveOldRequest remove old requests in redis sorted set so this sets will not become big to consume
+// so much memory.
 func RemoveOldRequest() {
 	cnf := config.GetCnf()
 	tehranList := &getPolygons.TehranDistrictList{}

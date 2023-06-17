@@ -61,3 +61,9 @@ pkg:
 we use basic functions or wrappers that is independent of other parts of project and consists connecting to
 tools like database and ... or calling external APIs
 
+# dynamic time window:
+we have managed to solve dynamic time window by using redis sorted sets. we set district id as key 
+so each request is saved in its origin district sorted set. we set score and value to request unix-time in
+milliseconds and when we want to count number of requests since 10 minutes ago for each district we use 
+ZCOUNT and give it unix time of 10 minutes ago until now and it gives us number of requests in each time window.
+also for making sorted sets small we have a periodic task that removes older requests in each district sorted set.
